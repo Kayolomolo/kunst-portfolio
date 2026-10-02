@@ -157,7 +157,7 @@ dialog::backdrop{background:rgba(22,16,10,.86)}
 
 <script id="app">
 (function(){
-  var REPO = 'Kayolomolo/kunst-portfolio', BRANCH = 'main', TOKEN_KEY = 'portfolio-github-token';
+  var LOGIN_URL = 'https://kunst-portfolio-login.vercel.app', TOKEN_KEY = 'portfolio-sessie';
   var saved = {name:'', tagline:'', bio:'', email:'', instagram:'', portrait:'', works:[]};
   var state = clone(saved);
   var editing = false, canEdit = false, dirty = false, filter = 'alle';
@@ -250,7 +250,7 @@ dialog::backdrop{background:rgba(22,16,10,.86)}
     html += '</section><footer><span>© ' + new Date().getFullYear() + ' ' + esc(state.name) + '</span><span><span class="sold-key"></span>verkocht</span>' + (editing ? '' : '<button class="linkbtn" id="beheer">' + (canEdit ? 'Bewerken' : 'Inloggen') + '</button>') + '</footer></div>';
 
     if (editing){
-      html += '<div class="savebar"><div class="wrap"><span><b>' + (dirty ? 'Niet-opgeslagen wijzigingen' : 'Bewerkmodus') + '</b><br><span class="meter">Bezoekers zien je wijzigingen pas na Opslaan · <button class="linkbtn" id="changeLogin">Inloggegevens wijzigen</button> · <button class="linkbtn" id="logout">Uitloggen</button></span></span>' +
+      html += '<div class="savebar"><div class="wrap"><span><b>' + (dirty ? 'Niet-opgeslagen wijzigingen' : 'Bewerkmodus') + '</b><br><span class="meter">Bezoekers zien je wijzigingen pas na Opslaan · <button class="linkbtn" id="logout">Uitloggen</button></span></span>' +
         '<span style="display:flex;gap:8px"><button class="btn" id="cancelEdit">' + (dirty ? 'Annuleren' : 'Klaar') + '</button><button class="btn solid" id="save"' + (dirty ? '' : ' disabled') + '>Opslaan</button></span></div></div>';
     }
     $('#root').innerHTML = html;
@@ -362,60 +362,38 @@ dialog::backdrop{background:rgba(22,16,10,.86)}
     }
   });
 
-  /* ---------- login with a GitHub token ---------- */
-  function api(path, opts){
-    opts = opts || {};
-    opts.headers = {'Authorization':'Bearer ' + (opts.token || getToken()), 'Accept':'application/vnd.github+json'};
-    if (opts.body) opts.headers['Content-Type'] = 'application/json';
-    return fetch('https://api.github.com/repos/' + REPO + path, opts);
+  /* ---------- login: e-mail + password, checked by the login service ---------- */
+  function call(endpoint, body){
+    return fetch(LOGIN_URL + '/api/' + endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)})
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ if (!r.ok) throw r.status; return j; }); });
   }
   function openLogin(){
-    dlg.innerHTML = '<form class="form" id="lf"><h3>Beheer</h3>' +
-      '<p style="margin:0">Alleen jij kunt de site aanpassen. Plak hieronder je GitHub-sleutel (een <i>fine-grained token</i>). Dat hoeft maar één keer per apparaat.</p>' +
-      '<details><summary style="cursor:pointer">Hoe maak ik zo’n sleutel?</summary><ol style="padding-left:20px;margin:8px 0 0;font-size:14px">' +
-      '<li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>' +
-      '<li>Naam: <b>portfolio</b>, vervaldatum: zelf kiezen</li>' +
-      '<li>Repository access: <b>Only select repositories</b> → <b>kunst-portfolio</b></li>' +
-      '<li>Permissions → Repository permissions → <b>Contents</b>: <b>Read and write</b></li>' +
-      '<li>Klik <b>Generate token</b> en kopieer de sleutel (begint met github_pat_)</li></ol></details>' +
-      '<label>GitHub-sleutel<input id="tok" type="password" class="editfield" autocomplete="off" placeholder="github_pat_…"></label>' +
+    dlg.innerHTML = '<form class="form" id="lf"><h3>Inloggen</h3>' +
+      '<label>E-mailadres<input id="l-email" type="email" class="editfield" autocomplete="username" required></label>' +
+      '<label>Wachtwoord<input id="l-pw" type="password" class="editfield" autocomplete="current-password" required></label>' +
       '<p class="err" id="lErr" hidden></p>' +
       '<div class="acts"><button type="button" class="btn" id="lCancel">Annuleren</button><button type="submit" class="btn solid">Inloggen</button></div></form>';
     $('#lCancel', dlg).onclick = function(){ dlg.close(); };
     $('#lf', dlg).onsubmit = function(e){
       e.preventDefault();
-      var tok = $('#tok', dlg).value.trim(), err = $('#lErr', dlg), btn = $('button[type=submit]', dlg);
-      if (!tok) return;
-      btn.disabled = true; btn.textContent = 'Controleren…';
-      api('', {token: tok}).then(function(r){ return r.ok ? r.json() : null; }).then(function(repo){
-        if (!repo || !repo.permissions || !repo.permissions.push) throw 0;
-        try { localStorage.setItem(TOKEN_KEY, tok); } catch(e){}
-        canEdit = true; editing = true; dlg.close(); render(); toast('Ingelogd. Je kunt nu bewerken.');
-      }).catch(function(){
+      var btn = $('button[type=submit]', dlg), err = $('#lErr', dlg);
+      btn.disabled = true; btn.textContent = 'Bezig…'; err.hidden = true;
+      call('login', {email: $('#l-email', dlg).value, wachtwoord: $('#l-pw', dlg).value}).then(function(j){
+        try { localStorage.setItem(TOKEN_KEY, j.sessie); } catch(e){}
+        canEdit = true; editing = true; dlg.close(); render(); toast('Welkom! Je kunt nu bewerken.');
+      }).catch(function(code){
         btn.disabled = false; btn.textContent = 'Inloggen';
-        err.textContent = 'Deze sleutel werkt niet. Controleer of hij toegang heeft tot kunst-portfolio met Contents: Read and write.'; err.hidden = false;
+        err.textContent = code === 401 ? 'E-mailadres of wachtwoord klopt niet.' : 'Inloggen lukt nu niet. Probeer het later opnieuw.';
+        err.hidden = false;
       });
     };
-    dlg.showModal();
+    dlg.showModal(); $('#l-email', dlg).focus();
   }
 
-  /* ---------- save: commit photos + data.json to GitHub ---------- */
+  /* ---------- save: send photos + data.json via the login service ---------- */
   function b64utf8(str){ return btoa(unescape(encodeURIComponent(str))); }
-  function shaOf(path){
-    return api('/contents/' + path + '?ref=' + BRANCH + '&t=' + Date.now()).then(function(r){ return r.ok ? r.json().then(function(j){ return j.sha; }) : null; });
-  }
-  function put(path, content, msg){
-    return shaOf(path).then(function(sha){
-      var body = {message: msg, content: content, branch: BRANCH}; if (sha) body.sha = sha;
-      return api('/contents/' + path, {method:'PUT', body: JSON.stringify(body)});
-    }).then(function(r){ if (!r.ok) throw r.status; });
-  }
-  function remove(path){
-    return shaOf(path).then(function(sha){
-      if (!sha) return;
-      return api('/contents/' + path, {method:'DELETE', body: JSON.stringify({message:'Foto verwijderd', sha: sha, branch: BRANCH})});
-    });
-  }
+  function put(path, content, msg){ return call('bestand', {sessie: getToken(), pad: path, inhoud: content, bericht: msg}); }
+  function remove(path){ return call('bestand', {sessie: getToken(), pad: path, verwijder: true}); }
   function imagesIn(o){ return [o.portrait].concat(o.works.map(function(w){ return w.image; })).filter(function(p){ return p && p.indexOf('images/') === 0; }); }
 
   function save(btn){
@@ -444,7 +422,7 @@ dialog::backdrop{background:rgba(22,16,10,.86)}
       toast('Opgeslagen! Over ongeveer een minuut ziet iedereen het.');
     }).catch(function(code){
       btn.disabled = false; btn.textContent = 'Opslaan';
-      if (code === 401 || code === 403) return toast('Je GitHub-sleutel werkt niet meer. Log uit en opnieuw in.');
+      if (code === 401){ try { localStorage.removeItem(TOKEN_KEY); } catch(e){} canEdit = false; return openLogin(); }
       if (code === 409) return toast('Er was net iets anders opgeslagen. Druk nog eens op Opslaan.');
       toast('Opslaan lukte niet. Controleer je internet en probeer opnieuw.');
     });
