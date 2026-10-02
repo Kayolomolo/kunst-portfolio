@@ -236,7 +236,7 @@ dialog::backdrop{background:rgba(22,16,10,.86)}
         var i = w.indexOf(x);
         var meta = [x.medium, x.size].filter(Boolean).map(esc).join(' · ');
         html += '<article class="work"><button class="frame" data-view="' + i + '" aria-label="Bekijk ' + esc(x.title || 'kunstwerk') + ' groter"><span class="mat"><img loading="lazy" src="' + esc(src(x.image)) + '" alt="' + esc(x.title) + '"></span></button>' +
-          '<div class="label"><h3>' + esc(x.title || 'Zonder titel') + (x.year ? ' <i>, ' + esc(x.year) + '</i>' : '') + (editing && isSample(x) ? '<span class="badge">voorbeeld</span>' : '') + '</h3>' +
+          '<div class="label"><h3>' + esc(x.title || 'Zonder titel') + (x.year ? '<i>, ' + esc(x.year) + '</i>' : '') + (editing && isSample(x) ? '<span class="badge">voorbeeld</span>' : '') + '</h3>' +
           '<div class="price' + (x.status === 'verkocht' ? ' sold' : '') + '">' + priceText(x) + '</div>' +
           (meta ? '<div class="meta">' + meta + '</div>' : '') + (x.desc ? '<p class="desc">' + esc(x.desc) + '</p>' : '');
         if (editing) html += '<div class="tools"><button class="btn small" data-edit="' + i + '">Wijzigen</button>' +
