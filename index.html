@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Atelier Kay</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style id="css">
+:root{
+  --wall:#F2F2EF; --paper:#FBFBF9; --ink:#18181A; --muted:#66666C; --line:#D8D8D2;
+  --dot:#D21F3C; --focus:#2F4BD6; --shade:rgba(20,20,22,.06);
+  --display:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body:"Karla", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --wall:#131315; --paper:#1B1B1E; --ink:#EDEDE8; --muted:#9A9AA0; --line:#2E2E33;
+    --dot:#FF4D63; --focus:#8EA0FF; --shade:rgba(0,0,0,.35); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --wall:#131315; --paper:#1B1B1E; --ink:#EDEDE8; --muted:#9A9AA0; --line:#2E2E33;
+  --dot:#FF4D63; --focus:#8EA0FF; --shade:rgba(0,0,0,.35); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--wall);color:var(--ink);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,48px)}
+
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px;border-bottom:1px solid var(--line)}
+.mark{font:italic 600 20px/1 var(--display);letter-spacing:.01em}
+.nav{display:flex;gap:22px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover{color:var(--ink)}
+
+/* intro */
+.intro{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(28px,6vw,80px);align-items:end;padding-block:clamp(40px,8vw,96px) clamp(36px,6vw,72px)}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+h1{font:400 clamp(48px,9vw,112px)/.92 var(--display);letter-spacing:-.02em;margin:0 0 28px;text-wrap:balance}
+h1 em{font-style:italic}
+.bio{font-size:clamp(17px,1.6vw,19px);max-width:56ch;margin:0;white-space:pre-line}
+.contact{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:26px;font:14px var(--mono)}
+.contact span{color:var(--muted)}
+.contact a{color:var(--ink)}
+.portrait{aspect-ratio:4/5;max-width:100%;background:var(--paper);border:1px solid var(--line);overflow:hidden;position:relative}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.portrait .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font:13px var(--mono);text-align:center;padding:20px}
+
+/* gallery */
+.sect{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-top:1px solid var(--ink);padding-top:14px;margin-bottom:36px}
+.sect h2{font:italic 400 32px/1.1 var(--display);margin:0}
+.sect .count{font:13px var(--mono);color:var(--muted)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:-16px 0 32px}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:5px 14px;font-size:13px;cursor:pointer;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--wall);border-color:var(--ink)}
+.grid{columns:3 300px;column-gap:clamp(20px,3vw,40px)}
+.work{break-inside:avoid;margin:0 0 clamp(36px,5vw,56px);display:block}
+.frame{background:var(--paper);padding:clamp(10px,1.4vw,16px);box-shadow:0 1px 0 var(--line),0 18px 40px -24px var(--shade);cursor:zoom-in;border:0;width:100%;display:block}
+.frame img{width:100%;height:auto}
+.label{display:grid;grid-template-columns:1fr auto;gap:2px 16px;margin-top:16px;align-items:start}
+.label h3{font:600 17px/1.3 var(--body);margin:0}
+.label h3 i{font-weight:400;color:var(--muted);font-style:normal}
+.meta{grid-column:1/-1;font:13px/1.5 var(--mono);color:var(--muted)}
+.desc{grid-column:1/-1;margin:6px 0 0;font-size:15px;white-space:pre-line}
+.price{font:500 15px/1.3 var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.price.sold{color:var(--muted)}
+.sold::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--dot);display:inline-block}
+.tools{grid-column:1/-1;display:flex;gap:8px;margin-top:10px}
+.empty{border:1px dashed var(--line);padding:48px 24px;text-align:center;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);margin-top:40px;padding-block:28px 48px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font:13px var(--mono);color:var(--muted)}
+
+/* buttons */
+.btn{border:1px solid var(--ink);background:transparent;padding:9px 16px;cursor:pointer;font-size:14px;font-weight:500;border-radius:2px}
+.btn.solid{background:var(--ink);color:var(--wall)}
+.btn.small{padding:4px 10px;font-size:13px;border-color:var(--line)}
+.btn.danger{color:var(--dot);border-color:currentColor}
+.btn:disabled{opacity:.45;cursor:default}
+.editbtn{font-size:13px;padding:6px 12px}
+.linkbtn{background:none;border:0;padding:0;color:inherit;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+/* edit mode */
+.editfield{width:100%;background:var(--paper);border:1px solid var(--line);padding:10px 12px;border-radius:2px}
+textarea.editfield{min-height:130px;resize:vertical;line-height:1.55}
+.edit-intro{display:grid;gap:14px}
+.edit-intro label,.form label{display:grid;gap:6px;font:12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.edit-intro label > *,.form label > *{text-transform:none;letter-spacing:0;font-family:var(--body);font-size:15px;color:var(--ink)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.savebar{position:sticky;bottom:0;z-index:5;background:var(--ink);color:var(--wall);padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px))}
+.savebar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.savebar .btn{border-color:var(--wall);color:var(--wall)}
+.savebar .btn.solid{background:var(--wall);color:var(--ink)}
+.meter{font:12px var(--mono);opacity:.75}
+.badge{font:11px var(--mono);text-transform:uppercase;letter-spacing:.1em;border:1px solid var(--line);padding:1px 6px;color:var(--muted);margin-left:6px;vertical-align:2px}
+.addtile{width:100%;break-inside:avoid;display:grid;place-items:center;gap:6px;min-height:220px;border:1px dashed var(--muted);background:transparent;cursor:pointer;margin-bottom:40px;color:var(--muted);font-size:15px}
+.addtile b{font:400 44px/1 var(--display);color:var(--ink)}
+
+/* dialogs */
+dialog{border:0;padding:0;background:transparent;max-width:100vw;max-height:100vh}
+dialog::backdrop{background:rgba(10,10,12,.82)}
+.lb{width:100vw;height:100vh;display:grid;grid-template-rows:1fr auto;gap:14px;padding:24px 16px;color:#EDEDE8}
+.lb img{max-height:100%;max-width:100%;object-fit:contain;margin:auto;min-height:0}
+.lb .cap{text-align:center;font:14px var(--mono)}
+.lb .x{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;background:none;border:1px solid #EDEDE8;color:#EDEDE8;padding:6px 12px;cursor:pointer}
+.form{background:var(--wall);color:var(--ink);width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;padding:24px;display:grid;gap:16px}
+.form h3{font:italic 400 28px/1.1 var(--display);margin:0}
+.drop{border:1px dashed var(--muted);padding:16px;display:grid;gap:10px;place-items:center;text-align:center;cursor:pointer;color:var(--muted);font-size:14px}
+.drop img{max-height:220px;width:auto}
+.form .acts{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.err{color:var(--dot);font-size:14px;margin:0}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--wall);padding:10px 18px;font-size:14px;z-index:20}
+
+@media (max-width:760px){
+  .intro{grid-template-columns:1fr}
+  .portrait{max-width:340px}
+  .nav{display:none}
+  .row2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .frame img{transition:transform .5s ease}
+  .frame:hover img{transform:scale(1.01)}
+}
+</style>
+
+</head>
+<body>
+<div id="root"></div>
+
+<script id="app">
+(function(){
+  var REPO = 'Kayolomolo/kunst-portfolio', BRANCH = 'main', TOKEN_KEY = 'portfolio-github-token';
+  var saved = {name:'', tagline:'', bio:'', email:'', instagram:'', portrait:'', works:[]};
+  var state = clone(saved);
+  var editing = false, canEdit = false, dirty = false, filter = 'alle';
+  function getToken(){ try { return localStorage.getItem(TOKEN_KEY) || ''; } catch(e){ return ''; } }
+
+  function clone(o){ return JSON.parse(JSON.stringify(o)); }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function $(sel, el){ return (el || document).querySelector(sel); }
+
+  // Draft that survives a reload, so unsaved work is not lost
+  function stash(){ try { sessionStorage.setItem('portfolio-draft', JSON.stringify(state)); } catch(e){} }
+  function unstash(){ try { sessionStorage.removeItem('portfolio-draft'); } catch(e){} }
+
+  function sampleArt(n){
+    var svgs = {
+      1:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 700"><rect width="500" height="700" fill="#E9C46A"/><circle cx="330" cy="230" r="150" fill="#E76F51"/><rect x="0" y="430" width="500" height="270" fill="#264653"/><rect x="60" y="380" width="200" height="120" fill="#F4A261"/></svg>',
+      2:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800"><rect width="600" height="800" fill="#F1F0EA"/><path d="M60 620 C 180 380, 320 760, 540 300" stroke="#1D3557" stroke-width="26" fill="none" stroke-linecap="round"/><path d="M80 260 C 220 120, 360 360, 520 160" stroke="#457B9D" stroke-width="10" fill="none" stroke-linecap="round"/><circle cx="430" cy="610" r="44" fill="#1D3557"/></svg>',
+      3:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600"><rect width="600" height="600" fill="#2B2D42"/><rect x="70" y="90" width="220" height="300" fill="#EDF2F4"/><circle cx="400" cy="380" r="140" fill="#D90429"/><polygon points="160,520 300,300 440,520" fill="#8D99AE"/></svg>'
+    };
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgs[n] || svgs[1]);
+  }
+  var localSrc = {}; // freshly uploaded photos, shown until GitHub Pages has rebuilt
+  function src(img){ return img && img.indexOf('sample:') === 0 ? sampleArt(+img.slice(7)) : (localSrc[img] || img); }
+  function isSample(w){ return (w.image || '').indexOf('sample:') === 0; }
+
+  function priceText(w){
+    if (w.status === 'verkocht') return 'Verkocht';
+    if (w.status === 'aanvraag' || !w.price) return 'Prijs op aanvraag';
+    var n = Number(String(w.price).replace(',', '.'));
+    if (isNaN(n)) return esc(w.price);
+    return new Intl.NumberFormat('nl-NL', {style:'currency', currency:'EUR', maximumFractionDigits: n % 1 ? 2 : 0}).format(n);
+  }
+
+
+  /* ---------- render ---------- */
+  function render(){
+    document.title = state.name ? 'Atelier ' + state.name : 'Atelier';
+    var w = state.works;
+    var shown = w.filter(function(x){ return filter === 'alle' || (filter === 'te-koop' ? x.status === 'te-koop' : x.status === 'verkocht'); });
+    var hasSale = w.some(function(x){ return x.status === 'te-koop'; }), hasSold = w.some(function(x){ return x.status === 'verkocht'; });
+
+    var html = '<div class="wrap"><header class="bar"><div class="mark">' + esc(state.name || 'Atelier') + '</div>' +
+      '<div style="display:flex;align-items:center;gap:22px"><nav class="nav"><a href="#over">Over mij</a><a href="#werk">Werk</a></nav>' +
+      (canEdit && !editing ? '<button class="btn editbtn" id="startEdit">Bewerken</button>' : '') + '</div></header>';
+
+    // intro
+    html += '<section class="intro" id="over"><div>';
+    if (editing){
+      html += '<div class="edit-intro"><label>Naam<input id="f-name" class="editfield" value="' + esc(state.name) + '"></label>' +
+        '<label>Ondertitel<input id="f-tagline" class="editfield" value="' + esc(state.tagline) + '" placeholder="Bijv. Schilderijen & tekeningen"></label>' +
+        '<label>Over mij<textarea id="f-bio" class="editfield">' + esc(state.bio) + '</textarea></label>' +
+        '<div class="row2"><label>E-mail<input id="f-email" class="editfield" value="' + esc(state.email) + '" placeholder="naam@voorbeeld.nl"></label>' +
+        '<label>Instagram<input id="f-instagram" class="editfield" value="' + esc(state.instagram) + '" placeholder="@jouwnaam"></label></div></div>';
+    } else {
+      html += '<p class="eyebrow">' + esc(state.tagline || 'Portfolio') + '</p><h1><em>' + esc(state.name || 'Atelier') + '</em></h1><p class="bio">' + esc(state.bio) + '</p>';
+      var c = [];
+      if (state.email) c.push('<span>Mail</span> ' + esc(state.email));
+      if (state.instagram){ var ig = state.instagram.replace(/^@/, ''); c.push('<span>Instagram</span> <a href="https://instagram.com/' + encodeURIComponent(ig) + '" target="_blank" rel="noopener">@' + esc(ig) + '</a>'); }
+      if (c.length) html += '<div class="contact">' + c.map(function(x){ return '<div>' + x + '</div>'; }).join('') + '</div>';
+    }
+    html += '</div><div><div class="portrait">' + (state.portrait ? '<img src="' + esc(state.portrait) + '" alt="Portret van ' + esc(state.name) + '">' : '<div class="ph">' + (editing ? 'Nog geen foto van jezelf' : '') + '</div>') + '</div>';
+    if (editing) html += '<div style="display:flex;gap:8px;margin-top:10px"><button class="btn small" id="pickPortrait">' + (state.portrait ? 'Andere foto' : 'Foto van jezelf kiezen') + '</button>' + (state.portrait ? '<button class="btn small danger" id="rmPortrait">Weghalen</button>' : '') + '</div>';
+    html += '</div></section>';
+
+    // gallery
+    html += '<section id="werk"><div class="sect"><h2>Werk</h2><span class="count">' + w.length + (w.length === 1 ? ' werk' : ' werken') + '</span></div>';
+    if (!editing && hasSale && hasSold){
+      html += '<div class="filters">' + [['alle','Alles'],['te-koop','Te koop'],['verkocht','Verkocht']].map(function(f){ return '<button class="chip" data-filter="' + f[0] + '" aria-pressed="' + (filter === f[0]) + '">' + f[1] + '</button>'; }).join('') + '</div>';
+    }
+    if (!w.length && !editing){
+      html += '<div class="empty">Binnenkort verschijnen hier de eerste kunstwerken.</div>';
+    } else {
+      html += '<div class="grid">';
+      if (editing) html += '<button class="addtile" id="addWork"><b>+</b>Kunstwerk toevoegen</button>';
+      (editing ? w : shown).forEach(function(x){
+        var i = w.indexOf(x);
+        var meta = [x.medium, x.size].filter(Boolean).map(esc).join(' · ');
+        html += '<article class="work"><button class="frame" data-view="' + i + '" aria-label="Bekijk ' + esc(x.title || 'kunstwerk') + ' groter"><img loading="lazy" src="' + esc(src(x.image)) + '" alt="' + esc(x.title) + '"></button>' +
+          '<div class="label"><h3>' + esc(x.title || 'Zonder titel') + (x.year ? ' <i>, ' + esc(x.year) + '</i>' : '') + (editing && isSample(x) ? '<span class="badge">voorbeeld</span>' : '') + '</h3>' +
+          '<div class="price' + (x.status === 'verkocht' ? ' sold' : '') + '">' + priceText(x) + '</div>' +
+          (meta ? '<div class="meta">' + meta + '</div>' : '') + (x.desc ? '<p class="desc">' + esc(x.desc) + '</p>' : '');
+        if (editing) html += '<div class="tools"><button class="btn small" data-edit="' + i + '">Wijzigen</button>' +
+          '<button class="btn small" data-move="' + i + ',-1"' + (i === 0 ? ' disabled' : '') + ' aria-label="Naar voren">←</button>' +
+          '<button class="btn small" data-move="' + i + ',1"' + (i === w.length - 1 ? ' disabled' : '') + ' aria-label="Naar achteren">→</button>' +
+          '<button class="btn small danger" data-del="' + i + '">Verwijderen</button></div>';
+        html += '</div></article>';
+      });
+      html += '</div>';
+    }
+    html += '</section><footer><span>© ' + new Date().getFullYear() + ' ' + esc(state.name) + '</span><span><span class="sold"></span> = verkocht</span>' + (editing ? '' : '<button class="linkbtn" id="beheer">Beheer</button>') + '</footer></div>';
+
+    if (editing){
+      html += '<div class="savebar"><div class="wrap"><span><b>' + (dirty ? 'Niet-opgeslagen wijzigingen' : 'Bewerkmodus') + '</b><br><span class="meter">Bezoekers zien je wijzigingen pas na Opslaan · <button class="linkbtn" id="logout">Uitloggen</button></span></span>' +
+        '<span style="display:flex;gap:8px"><button class="btn" id="cancelEdit">' + (dirty ? 'Annuleren' : 'Klaar') + '</button><button class="btn solid" id="save"' + (dirty ? '' : ' disabled') + '>Opslaan</button></span></div></div>';
+    }
+    $('#root').innerHTML = html;
+  }
+
+  /* ---------- intro fields ---------- */
+  document.addEventListener('input', function(e){
+    var m = e.target.id && e.target.id.match(/^f-(name|tagline|bio|email|instagram)$/);
+    if (m){ state[m[1]] = e.target.value; markDirty(false); }
+  });
+  function markDirty(rerender){
+    dirty = true; stash();
+    if (rerender !== false) render();
+    else { var s = $('#save'); if (s) s.disabled = false; var b = $('.savebar b'); if (b) b.textContent = 'Niet-opgeslagen wijzigingen'; var c = $('#cancelEdit'); if (c) c.textContent = 'Annuleren'; }
+  }
+
+  /* ---------- image handling ---------- */
+  function pickFile(cb){
+    var inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+    inp.onchange = function(){ if (inp.files[0]) cb(inp.files[0]); };
+    inp.click();
+  }
+  function shrink(file, max, cb){
+    var url = URL.createObjectURL(file), img = new Image();
+    img.onload = function(){
+      var s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+      var c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+      var g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); cb(null, c.toDataURL('image/jpeg', 0.8));
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); cb('Deze foto kon niet worden geopend. Probeer een JPG- of PNG-bestand.'); };
+    img.src = url;
+  }
+
+  /* ---------- artwork form ---------- */
+  var dlg = document.createElement('dialog'); document.body.appendChild(dlg);
+  function openForm(i){
+    var isNew = i == null, w = isNew ? {title:'',year:String(new Date().getFullYear()),medium:'',size:'',desc:'',price:'',status:'te-koop',image:''} : clone(state.works[i]);
+    dlg.innerHTML = '<form class="form" id="wf" method="dialog"><h3>' + (isNew ? 'Nieuw kunstwerk' : 'Kunstwerk wijzigen') + '</h3>' +
+      '<div class="drop" id="wImg" role="button" tabindex="0">' + (w.image ? '<img src="' + esc(src(w.image)) + '" alt=""><span>Klik om een andere foto te kiezen</span>' : '<span><b>Foto kiezen</b><br>Klik hier om een foto van je kunstwerk te uploaden</span>') + '</div>' +
+      '<p class="err" id="wErr" hidden></p>' +
+      '<label>Titel<input id="w-title" class="editfield" value="' + esc(w.title) + '" placeholder="Bijv. Zomeravond"></label>' +
+      '<div class="row2"><label>Techniek<input id="w-medium" class="editfield" value="' + esc(w.medium) + '" placeholder="Bijv. Olieverf op doek"></label>' +
+      '<label>Afmetingen<input id="w-size" class="editfield" value="' + esc(w.size) + '" placeholder="Bijv. 40 × 60 cm"></label></div>' +
+      '<label>Korte omschrijving<textarea id="w-desc" class="editfield" style="min-height:90px">' + esc(w.desc) + '</textarea></label>' +
+      '<div class="row2"><label>Status<select id="w-status" class="editfield">' +
+        [['te-koop','Te koop'],['verkocht','Verkocht'],['aanvraag','Prijs op aanvraag']].map(function(o){ return '<option value="' + o[0] + '"' + (w.status === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') +
+      '</select></label><label>Prijs in euro<input id="w-price" class="editfield" inputmode="decimal" value="' + esc(w.price) + '" placeholder="Bijv. 250"></label></div>' +
+      '<label>Jaar<input id="w-year" class="editfield" inputmode="numeric" value="' + esc(w.year) + '"></label>' +
+      '<div class="acts"><button type="button" class="btn" id="wCancel">Annuleren</button><button type="submit" class="btn solid">' + (isNew ? 'Toevoegen' : 'Klaar') + '</button></div></form>';
+    var errEl = $('#wErr', dlg);
+    function choose(){
+      pickFile(function(f){
+        $('#wImg', dlg).innerHTML = '<span>Foto verkleinen…</span>';
+        shrink(f, 1400, function(err, data){
+          if (err){ errEl.textContent = err; errEl.hidden = false; $('#wImg', dlg).innerHTML = '<span><b>Foto kiezen</b></span>'; return; }
+          w.image = data; errEl.hidden = true;
+          $('#wImg', dlg).innerHTML = '<img src="' + data + '" alt=""><span>Klik om een andere foto te kiezen</span>';
+        });
+      });
+    }
+    $('#wImg', dlg).onclick = choose;
+    $('#wImg', dlg).onkeydown = function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); choose(); } };
+    $('#wCancel', dlg).onclick = function(){ dlg.close(); };
+    $('#wf', dlg).onsubmit = function(e){
+      e.preventDefault();
+      if (!w.image){ errEl.textContent = 'Kies eerst een foto van je kunstwerk.'; errEl.hidden = false; return; }
+      ['title','medium','size','desc','status','price','year'].forEach(function(k){ w[k] = $('#w-' + k, dlg).value.trim(); });
+      w.price = w.price.replace(/[€\s]/g, '');
+      if (isNew){ w.id = 'w' + Date.now(); state.works.unshift(w); } else state.works[i] = w;
+      dlg.close(); markDirty();
+    };
+    dlg.showModal();
+  }
+
+  function openLightbox(i){
+    var w = state.works[i];
+    dlg.innerHTML = '<div class="lb"><button class="x" id="lbx">Sluiten</button><img src="' + esc(src(w.image)) + '" alt="' + esc(w.title) + '"><div class="cap">' + esc(w.title || 'Zonder titel') + (w.size ? ' · ' + esc(w.size) : '') + ' · ' + priceText(w) + '</div></div>';
+    $('#lbx', dlg).onclick = function(){ dlg.close(); };
+    $('.lb', dlg).onclick = function(e){ if (e.target.tagName !== 'IMG') dlg.close(); };
+    dlg.showModal();
+  }
+
+  function toast(msg){
+    var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t);
+    setTimeout(function(){ t.remove(); }, 3500);
+  }
+
+  /* ---------- clicks ---------- */
+  var pendingDel = null;
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('button,[data-view]'); if (!t || dlg.contains(t)) return;
+    if (t.id === 'startEdit'){ editing = true; render(); return; }
+    if (t.id === 'beheer'){ if (getToken()){ canEdit = true; editing = true; render(); } else openLogin(); return; }
+    if (t.id === 'logout'){ try { localStorage.removeItem(TOKEN_KEY); } catch(e){} state = clone(saved); dirty = false; editing = false; canEdit = false; unstash(); render(); return toast('Uitgelogd op dit apparaat.'); }
+    if (t.id === 'cancelEdit'){ state = clone(saved); dirty = false; editing = false; unstash(); render(); return; }
+    if (t.id === 'save') return save(t);
+    if (t.id === 'addWork') return openForm(null);
+    if (t.id === 'pickPortrait') return pickFile(function(f){ shrink(f, 900, function(err, d){ if (err) return toast(err); state.portrait = d; markDirty(); }); });
+    if (t.id === 'rmPortrait'){ state.portrait = ''; return markDirty(); }
+    if (t.dataset.filter){ filter = t.dataset.filter; return render(); }
+    if (t.dataset.view != null) return openLightbox(+t.dataset.view);
+    if (t.dataset.edit != null) return openForm(+t.dataset.edit);
+    if (t.dataset.move){ var p = t.dataset.move.split(','), a = +p[0], b = a + +p[1]; var tmp = state.works[a]; state.works[a] = state.works[b]; state.works[b] = tmp; return markDirty(); }
+    if (t.dataset.del != null){
+      var i = +t.dataset.del;
+      if (pendingDel !== i){ pendingDel = i; t.textContent = 'Zeker weten?'; setTimeout(function(){ if (pendingDel === i){ pendingDel = null; render(); } }, 3000); return; }
+      pendingDel = null; state.works.splice(i, 1); return markDirty();
+    }
+  });
+
+  /* ---------- login with a GitHub token ---------- */
+  function api(path, opts){
+    opts = opts || {};
+    opts.headers = {'Authorization':'Bearer ' + (opts.token || getToken()), 'Accept':'application/vnd.github+json'};
+    if (opts.body) opts.headers['Content-Type'] = 'application/json';
+    return fetch('https://api.github.com/repos/' + REPO + path, opts);
+  }
+  function openLogin(){
+    dlg.innerHTML = '<form class="form" id="lf"><h3>Beheer</h3>' +
+      '<p style="margin:0">Alleen jij kunt de site aanpassen. Plak hieronder je GitHub-sleutel (een <i>fine-grained token</i>). Dat hoeft maar één keer per apparaat.</p>' +
+      '<details><summary style="cursor:pointer">Hoe maak ik zo’n sleutel?</summary><ol style="padding-left:20px;margin:8px 0 0;font-size:14px">' +
+      '<li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>' +
+      '<li>Naam: <b>portfolio</b>, vervaldatum: zelf kiezen</li>' +
+      '<li>Repository access: <b>Only select repositories</b> → <b>kunst-portfolio</b></li>' +
+      '<li>Permissions → Repository permissions → <b>Contents</b>: <b>Read and write</b></li>' +
+      '<li>Klik <b>Generate token</b> en kopieer de sleutel (begint met github_pat_)</li></ol></details>' +
+      '<label>GitHub-sleutel<input id="tok" type="password" class="editfield" autocomplete="off" placeholder="github_pat_…"></label>' +
+      '<p class="err" id="lErr" hidden></p>' +
+      '<div class="acts"><button type="button" class="btn" id="lCancel">Annuleren</button><button type="submit" class="btn solid">Inloggen</button></div></form>';
+    $('#lCancel', dlg).onclick = function(){ dlg.close(); };
+    $('#lf', dlg).onsubmit = function(e){
+      e.preventDefault();
+      var tok = $('#tok', dlg).value.trim(), err = $('#lErr', dlg), btn = $('button[type=submit]', dlg);
+      if (!tok) return;
+      btn.disabled = true; btn.textContent = 'Controleren…';
+      api('', {token: tok}).then(function(r){ return r.ok ? r.json() : null; }).then(function(repo){
+        if (!repo || !repo.permissions || !repo.permissions.push) throw 0;
+        try { localStorage.setItem(TOKEN_KEY, tok); } catch(e){}
+        canEdit = true; editing = true; dlg.close(); render(); toast('Ingelogd. Je kunt nu bewerken.');
+      }).catch(function(){
+        btn.disabled = false; btn.textContent = 'Inloggen';
+        err.textContent = 'Deze sleutel werkt niet. Controleer of hij toegang heeft tot kunst-portfolio met Contents: Read and write.'; err.hidden = false;
+      });
+    };
+    dlg.showModal();
+  }
+
+  /* ---------- save: commit photos + data.json to GitHub ---------- */
+  function b64utf8(str){ return btoa(unescape(encodeURIComponent(str))); }
+  function shaOf(path){
+    return api('/contents/' + path + '?ref=' + BRANCH + '&t=' + Date.now()).then(function(r){ return r.ok ? r.json().then(function(j){ return j.sha; }) : null; });
+  }
+  function put(path, content, msg){
+    return shaOf(path).then(function(sha){
+      var body = {message: msg, content: content, branch: BRANCH}; if (sha) body.sha = sha;
+      return api('/contents/' + path, {method:'PUT', body: JSON.stringify(body)});
+    }).then(function(r){ if (!r.ok) throw r.status; });
+  }
+  function remove(path){
+    return shaOf(path).then(function(sha){
+      if (!sha) return;
+      return api('/contents/' + path, {method:'DELETE', body: JSON.stringify({message:'Foto verwijderd', sha: sha, branch: BRANCH})});
+    });
+  }
+  function imagesIn(o){ return [o.portrait].concat(o.works.map(function(w){ return w.image; })).filter(function(p){ return p && p.indexOf('images/') === 0; }); }
+
+  function save(btn){
+    btn.disabled = true; btn.textContent = 'Opslaan…';
+    stash();
+    var next = clone(state), uploads = [];
+    function take(holder, key, name){
+      var v = holder[key];
+      if (v && v.indexOf('data:') === 0){ var p = 'images/' + name + '-' + Date.now().toString(36) + '.jpg'; uploads.push([p, v]); holder[key] = p; }
+    }
+    take(next, 'portrait', 'portret');
+    next.works.forEach(function(w){ take(w, 'image', w.id); });
+    var chain = Promise.resolve(), n = 0;
+    uploads.forEach(function(u){
+      chain = chain.then(function(){ btn.textContent = 'Foto ' + (++n) + ' van ' + uploads.length + '…'; return put(u[0], u[1].split(',')[1], 'Foto toegevoegd'); })
+        .then(function(){ localSrc[u[0]] = u[1]; });
+    });
+    chain.then(function(){
+      btn.textContent = 'Gegevens opslaan…';
+      return put('data.json', b64utf8(JSON.stringify(next, null, 2) + '\n'), 'Portfolio bijgewerkt');
+    }).then(function(){
+      var keep = imagesIn(next), old = imagesIn(saved).filter(function(p){ return keep.indexOf(p) < 0; });
+      return old.reduce(function(c, p){ return c.then(function(){ return remove(p); }); }, Promise.resolve()).catch(function(){});
+    }).then(function(){
+      saved = next; state = clone(next); dirty = false; editing = false; unstash(); render();
+      toast('Opgeslagen! Over ongeveer een minuut ziet iedereen het.');
+    }).catch(function(code){
+      btn.disabled = false; btn.textContent = 'Opslaan';
+      if (code === 401 || code === 403) return toast('Je GitHub-sleutel werkt niet meer. Log uit en opnieuw in.');
+      if (code === 409) return toast('Er was net iets anders opgeslagen. Druk nog eens op Opslaan.');
+      toast('Opslaan lukte niet. Controleer je internet en probeer opnieuw.');
+    });
+  }
+
+  window.addEventListener('beforeunload', function(e){ if (dirty){ e.preventDefault(); e.returnValue = ''; } });
+
+  $('#root').innerHTML = '<div class="wrap" style="padding-block:80px;color:var(--muted)">Laden…</div>';
+  fetch('data.json?t=' + Date.now()).then(function(r){ return r.json(); }).then(function(d){
+    saved = d; state = clone(d);
+    canEdit = !!getToken();
+    try { var draft = sessionStorage.getItem('portfolio-draft'); if (draft && canEdit){ state = JSON.parse(draft); dirty = true; editing = true; } } catch(e){}
+    render();
+  }).catch(function(){
+    $('#root').innerHTML = '<div class="wrap" style="padding-block:80px">De pagina kon niet worden geladen. Probeer het later opnieuw.</div>';
+  });
+})();
+</script>
+</body>
+</html>

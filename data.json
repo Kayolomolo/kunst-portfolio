@@ -1,0 +1,43 @@
+{
+  "name": "Kay",
+  "tagline": "Schilderijen & tekeningen",
+  "bio": "Hoi! Ik ben Kay. Ik maak schilderijen en tekeningen waarin kleur en vorm de hoofdrol spelen. Ik werk vooral met acryl op doek en met inkt op papier.\n\nDit is een voorbeeldtekst – klik onderaan op ‘Beheer’ om hier je eigen verhaal neer te zetten.",
+  "email": "",
+  "instagram": "",
+  "portrait": "",
+  "works": [
+    {
+      "id": "v1",
+      "title": "Middagzon",
+      "year": "2026",
+      "medium": "Acryl op doek",
+      "size": "50 × 70 cm",
+      "desc": "Voorbeeldwerk – vervang dit door je eigen kunstwerk.",
+      "price": "350",
+      "status": "te-koop",
+      "image": "sample:1"
+    },
+    {
+      "id": "v2",
+      "title": "Blauwe uren",
+      "year": "2025",
+      "medium": "Inkt op papier",
+      "size": "30 × 40 cm",
+      "desc": "Voorbeeldwerk.",
+      "price": "120",
+      "status": "verkocht",
+      "image": "sample:2"
+    },
+    {
+      "id": "v3",
+      "title": "Drie vormen",
+      "year": "2025",
+      "medium": "Gemengde techniek",
+      "size": "40 × 40 cm",
+      "desc": "Voorbeeldwerk.",
+      "price": "",
+      "status": "aanvraag",
+      "image": "sample:3"
+    }
+  ]
+}
