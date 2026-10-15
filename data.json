@@ -7,26 +7,213 @@
   "portrait": "",
   "works": [
     {
-      "id": "v1",
-      "title": "Middagzon",
+      "title": "buitenleven",
       "year": "2026",
-      "medium": "Acryl op doek",
-      "size": "50 × 70 cm",
+      "medium": "olieverf op hout",
+      "size": "",
+      "desc": "",
+      "price": "",
+      "status": "verkocht",
+      "image": "images/w1792059101119-mv9dq9bg.jpg",
+      "id": "w1792059101119"
+    },
+    {
+      "title": "",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792058958427-mv9dq9bg.jpg",
+      "id": "w1792058958427"
+    },
+    {
+      "title": "",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792058909196-mv9dq9bg.jpg",
+      "id": "w1792058909196"
+    },
+    {
+      "title": "",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "60 x 80 cm.",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792058854230-mv9dq9bg.jpg",
+      "id": "w1792058854230"
+    },
+    {
+      "title": "",
+      "year": "2011",
+      "medium": "olieverf op doek",
+      "size": "",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792058752232-mv9dq9bg.jpg",
+      "id": "w1792058752232"
+    },
+    {
+      "title": "",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "60 x 80 cm.",
+      "desc": "",
+      "price": "",
+      "status": "verkocht",
+      "image": "images/w1792058686306-mv9dq9bg.jpg",
+      "id": "w1792058686306"
+    },
+    {
+      "title": "",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "100 x 120 cm.",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792058616709-mv9dq9bg.jpg",
+      "id": "w1792058616709"
+    },
+    {
+      "title": "",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792057993595-mv9dq9bg.jpg",
+      "id": "w1792057993595"
+    },
+    {
+      "title": "vrede",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "",
+      "desc": "",
+      "price": "",
+      "status": "verkocht",
+      "image": "images/w1792057817906-mv9dq9bg.jpg",
+      "id": "w1792057817906"
+    },
+    {
+      "title": "paard met veulen",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792057689119-mv9dq9bg.jpg",
+      "id": "w1792057689119"
+    },
+    {
+      "title": "beren",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "",
+      "desc": "",
+      "price": "",
+      "status": "verkocht",
+      "image": "images/w1792057456066-mv9dq9bg.jpg",
+      "id": "w1792057456066"
+    },
+    {
+      "title": "naakt",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "100 x 120 cm.",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792057247684-mv9dq9bg.jpg",
+      "id": "w1792057247684"
+    },
+    {
+      "title": "naakt",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "60 x 80 cm.",
+      "desc": "",
+      "price": "",
+      "status": "verkocht",
+      "image": "images/w1792057190855-mv9dq9bg.jpg",
+      "id": "w1792057190855"
+    },
+    {
+      "title": "uilen",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "60 x 80 cm.",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792057050710-mv9dq9bg.jpg",
+      "id": "w1792057050710"
+    },
+    {
+      "title": "",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "60 x 80 cm.",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792056913548-mv9dq9bg.jpg",
+      "id": "w1792056913548"
+    },
+    {
+      "title": "roodborstje",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "30 × 40 cm",
+      "desc": "",
+      "price": "",
+      "status": "aanvraag",
+      "image": "images/w1792056860431-mv9dq9bg.jpg",
+      "id": "w1792056860431"
+    },
+    {
+      "title": "",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "60 x 80 cm.",
+      "desc": "",
+      "price": "",
+      "status": "verkocht",
+      "image": "images/w1792055964408-mv9dq9bg.jpg",
+      "id": "w1792055964408"
+    },
+    {
+      "id": "v1",
+      "title": "zeegezicht",
+      "year": "2012",
+      "medium": "olieverf op doek",
+      "size": "60 x 80 cm.",
       "desc": "Voorbeeldwerk – vervang dit door je eigen kunstwerk.",
       "price": "350",
-      "status": "te-koop",
-      "image": "sample:1"
+      "status": "aanvraag",
+      "image": "images/v1-mv9dq9bg.jpg"
     },
     {
       "id": "v2",
       "title": "Blauwe uren",
       "year": "2025",
-      "medium": "Inkt op papier",
-      "size": "30 × 40 cm",
+      "medium": "olieverf op doek",
+      "size": "100 x 120 cm.",
       "desc": "Voorbeeldwerk.",
       "price": "120",
-      "status": "verkocht",
-      "image": "sample:2"
+      "status": "aanvraag",
+      "image": "images/v2-mv9dq9bg.jpg"
     },
     {
       "id": "v3",
@@ -37,7 +224,7 @@
       "desc": "Voorbeeldwerk.",
       "price": "",
       "status": "aanvraag",
-      "image": "images/v3-mv2t8dfw.jpg"
+      "image": "images/v3-mv9dq9bg.jpg"
     }
   ]
 }
