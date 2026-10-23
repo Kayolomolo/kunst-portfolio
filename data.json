@@ -7,6 +7,17 @@
   "portrait": "images/portret-mvl9nnw7.jpg",
   "works": [
     {
+      "title": "Poes",
+      "year": "2026",
+      "medium": "olieverf op doek",
+      "size": "",
+      "desc": "Particulier bezit",
+      "price": "",
+      "status": "te-koop",
+      "image": "images/w1792779588645-mvlaoixm.jpg",
+      "id": "w1792779588645"
+    },
+    {
       "title": "",
       "year": "2026",
       "medium": "olieverf op doek",
