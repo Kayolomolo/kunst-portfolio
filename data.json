@@ -7,17 +7,6 @@
   "portrait": "images/portret-mvl9nnw7.jpg",
   "works": [
     {
-      "title": "buitenleven",
-      "year": "2026",
-      "medium": "olieverf op hout",
-      "size": "",
-      "desc": "",
-      "price": "",
-      "status": "verkocht",
-      "image": "images/w1792059101119-mv9dq9bg.jpg",
-      "id": "w1792059101119"
-    },
-    {
       "title": "",
       "year": "2026",
       "medium": "olieverf op doek",
@@ -121,7 +110,7 @@
       "year": "2026",
       "medium": "olieverf op doek",
       "size": "",
-      "desc": "",
+      "desc": "Particulier bezit",
       "price": "",
       "status": "verkocht",
       "image": "images/w1792057456066-mv9dq9bg.jpg",
