@@ -185,6 +185,7 @@ dialog::backdrop{background:rgba(22,16,10,.86)}
 
   function priceText(w){
     if (w.status === 'verkocht') return 'Verkocht';
+    if (w.status === 'nvt') return 'Niet te koop';
     if (w.status === 'aanvraag' || !w.price) return 'Prijs op aanvraag';
     var n = Number(String(w.price).replace(',', '.'));
     if (isNaN(n)) return esc(w.price);
@@ -297,7 +298,7 @@ dialog::backdrop{background:rgba(22,16,10,.86)}
       '<label>Afmetingen<input id="w-size" class="editfield" value="' + esc(w.size) + '" placeholder="Bijv. 40 × 60 cm"></label></div>' +
       '<label>Korte omschrijving<textarea id="w-desc" class="editfield" style="min-height:90px">' + esc(w.desc) + '</textarea></label>' +
       '<div class="row2"><label>Status<select id="w-status" class="editfield">' +
-        [['te-koop','Te koop'],['verkocht','Verkocht'],['aanvraag','Prijs op aanvraag']].map(function(o){ return '<option value="' + o[0] + '"' + (w.status === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') +
+        [['te-koop','Te koop'],['verkocht','Verkocht'],['aanvraag','Prijs op aanvraag'],['nvt','N.v.t. (niet te koop)']].map(function(o){ return '<option value="' + o[0] + '"' + (w.status === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') +
       '</select></label><label>Prijs in euro<input id="w-price" class="editfield" inputmode="decimal" value="' + esc(w.price) + '" placeholder="Bijv. 250"></label></div>' +
       '<label>Jaar<input id="w-year" class="editfield" inputmode="numeric" value="' + esc(w.year) + '"></label>' +
       '<div class="acts"><button type="button" class="btn" id="wCancel">Annuleren</button><button type="submit" class="btn solid">' + (isNew ? 'Toevoegen' : 'Klaar') + '</button></div></form>';
